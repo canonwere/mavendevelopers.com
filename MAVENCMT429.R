@@ -156,3 +156,47 @@ text_corpus <- tm_map(text_corpus, removePunctuation)
 text_corpus <- tm_map(text_corpus, removeWords, stopwords("english"))
 text_corpus <- tm_map(text_corpus, stemDocument)
 print(text_corpus)
+
+#visualization
+# Histogram of TotalNumberOfPeople
+hist(MAVENDEVCMT429_with_count$TotalNumberOfPeople, main = "Histogram of Total Number of People",
+     xlab = "Number of People", ylab = "Frequency")
+
+# Time series plot of TotalNumberOfPeople
+plot(ts_data, main = "Time Series of Total Number of People",
+     xlab = "Time", ylab = "Total Number of People")
+# Print summary of the linear regression model
+print(summary(linear_model))
+
+# Print the results of the k-means clustering
+print(kmeans_clusters)
+
+# Print summary of the Naive Bayes model
+print(model_nb)
+
+# Print details of the Gaussian Mixture Model
+print(summary(gmm_model))
+
+# Print the preprocessed text corpus
+print(text_corpus)
+# Visualize ARIMA Forecast
+plot(forecast(model_arima))
+# Residuals vs Fitted Plot
+plot(linear_model)
+
+# Scatterplot of Actual vs Predicted values
+plot(predict(linear_model), MAVENDEVCMT429_with_count$TotalNumberOfPeople)
+abline(0, 1, col = "red")  # Adding a line of equality
+# Plotting K-means clusters
+library(ggplot2)
+ggplot(data = MAVENDEVCMT429_with_count, aes(x = 'Cluster', y = TotalNumberOfPeople, color = as.factor(kmeans_clusters$cluster))) +
+  geom_point() +
+  labs(title = "K-means Clustering of Regions", x = "Cluster", y = "Total Number of People")
+# Plotting Gaussian Mixture Model clusters
+plot(gmm_model, what = "classification")
+library(mclust)
+gmm_model <- Mclust(MAVENDEVCMT429_with_count[, c('Score', 'TotalNumberOfPeople')])
+print(gmm_model)
+library(mclust)
+gmm_model <- Mclust(MAVENDEVCMT429_with_count[, c('Score', 'TotalNumberOfPeople')])
+print(gmm_model)
